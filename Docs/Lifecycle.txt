@@ -1,0 +1,8 @@
+Lifecycle component rises OnDestroy event when object is destroyed.
+
+MonoBehaviour - LifecycleComponent is added to gameObject, it is manages all lifecycle depenant components.
+
+Pure C# class instance - it needs to implement appriopriate interface, that provides reference to lifecycleComponent.
+
+Objects existing on scene while it is loaded are collected and iitialized by manager.
+All objects created after scene start are created through Utility class to enable initialization.

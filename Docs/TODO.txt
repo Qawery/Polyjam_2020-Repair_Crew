@@ -1,0 +1,14 @@
+Dependency injection
+
+Update manager
+
+Lifecycle manager
+
+Action binder/unbinder
+
+Pooling system dla obiektów:
+-ma ile danych obiektów istnieje
+
+Input system
+
+Sound system
