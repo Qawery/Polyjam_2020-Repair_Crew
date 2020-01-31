@@ -1,7 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
-using Polyjam2020;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
