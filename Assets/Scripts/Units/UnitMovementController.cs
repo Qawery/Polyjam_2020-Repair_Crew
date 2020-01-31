@@ -12,28 +12,45 @@ namespace Polyjam2020
         [SerializeField] private float maxRotationSpeedInDegrees = 360.0f;
         [SerializeField] private float rotationAccelerationInDegrees = 360.0f;
 
+        private bool isDecelerating = false;
+        private float deceleration = 0.0f;
+
         public Vector3 TargetPoint { get; private set; }
         public float CurrentSpeed { get; private set; }
         public float CurrentRotationSpeed { get; private set; }
 
         public float MaxSpeed => maxSpeed;
-        
+
+        private void Awake()
+        {
+            StopMovement();
+        }
+
         public void MoveToPoint(Vector3 target)
         {
-            TargetPoint = target;
+            TargetPoint = target.Flat() + transform.position.y * Vector3.up;
+            isDecelerating = false;
         }
 
         public void StopMovement()
         {
-            TargetPoint = transform.position;
-            CurrentSpeed = 0;
+            MoveToPoint(transform.position);
         }
 
-        private const float rotationTolerance = 0.0001f;
-        private const float speedTolerance = 0.0001f;
+        private const float rotationTolerance = 0.01f;
+        private const float speedTolerance = 0.01f;
+        private const float distanceTolerance = 0.01f;
         private void Update()
         {
-            Vector3 toTarget = (TargetPoint - transform.position).Flat();
+            Vector3 toTarget = TargetPoint - transform.position;
+            float distanceFromTarget = toTarget.magnitude;
+            if (distanceFromTarget < distanceTolerance)
+            {
+                CurrentSpeed = 0.0f;
+                transform.position = TargetPoint;
+                return;
+            }
+        
             Quaternion targetRotation = Quaternion.LookRotation(toTarget.normalized);
             float angleRemaining = Quaternion.Angle(transform.rotation, targetRotation);
             if (angleRemaining > rotationTolerance)
@@ -49,15 +66,19 @@ namespace Polyjam2020
                 return;
             }
 
-            float distanceFromTarget = toTarget.magnitude;
             if (distanceFromTarget <= decelerationDistance)
             {
-                float deceleration = 0.5f * maxSpeed * maxSpeed / decelerationDistance;
+                if (!isDecelerating)
+                {
+                    isDecelerating = true;
+                    deceleration = 0.5f * CurrentSpeed * CurrentSpeed / decelerationDistance;
+                }
+
                 CurrentSpeed -= deceleration * Time.deltaTime;
                 if (CurrentSpeed < speedTolerance)
                 {
                     CurrentSpeed = 0;
-                    transform.position = new Vector3(TargetPoint.x, 0, TargetPoint.z);
+                    transform.position = TargetPoint;
                 }
             }
             else if (CurrentSpeed < maxSpeed)
