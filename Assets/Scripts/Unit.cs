@@ -6,6 +6,7 @@ namespace Polyjam2020
 {
 	public class Unit : MonoBehaviour
 	{
+		public const float HEAL_AMMOUNT = 1.0f;
 		private Node nodeUnderEffect = null;
 
 
@@ -17,13 +18,14 @@ namespace Polyjam2020
 			var trigger = GetComponent<Collider>();
 			Assert.IsNotNull(trigger, "Missing collider component on: " + gameObject.name);
 			Assert.IsTrue(trigger.isTrigger, "Collider is not trigger on: " + gameObject.name);
+			Assert.IsTrue(HEAL_AMMOUNT > 0.0f);
 		}
 
 		private void Update()
 		{
 			if (nodeUnderEffect != null)
 			{
-				//TODO: wywrzeć efekt na node
+				nodeUnderEffect.ApplyHeal(HEAL_AMMOUNT * Time.deltaTime);
 			}
 		}
 
