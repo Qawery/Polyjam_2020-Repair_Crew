@@ -6,24 +6,26 @@ namespace Polyjam2020
 {
 	public class Edge : MonoBehaviour
 	{
-		[SerializeField] private (Node first, Node second) nodes = (null, null);
+		[SerializeField] private Node firstNode = null;
+		[SerializeField] private Node firstSecond = null;
 
 
 		public (Node first, Node second) Nodes
 		{
 			get
 			{
-				return nodes;
+				return (firstNode, firstSecond);
 			}
 
 			set
 			{
-				nodes = value;
-				Assert.IsNotNull(nodes.first, "Null first node on: " + gameObject.name);
-				Assert.IsNotNull(nodes.second, "Null second node on: " + gameObject.name);
-				Assert.IsFalse(nodes.first == nodes.second, "Edge points to same node on: " + gameObject.name);
-				nodes.first.AddEdge(this);
-				nodes.second.AddEdge(this);
+				Assert.IsNull(firstNode, "Not null first node on: " + gameObject.name);
+				Assert.IsNull(firstSecond, "Not null second node on: " + gameObject.name);
+				firstNode = value.first;
+				firstSecond = value.second;
+				CheckNodesValidity();
+				firstNode.AddEdge(this);
+				firstSecond.AddEdge(this);
 				//TODO: Wyswietlanie i pozycjonowanie
 			}
 		}
@@ -31,22 +33,28 @@ namespace Polyjam2020
 
 		private void Start()
 		{
-			Assert.IsNotNull(nodes.first, "On Start null first node on: " + gameObject.name);
-			Assert.IsNotNull(nodes.second, "On Start null second node on: " + gameObject.name);
+			CheckNodesValidity();
 		}
 
 		private void OnDestroy()
 		{
-			if (nodes.first != null)
+			if (firstNode != null)
 			{
-				nodes.first.RemoveEdge(this);
-				nodes.first = null;
+				firstNode.RemoveEdge(this);
+				firstNode = null;
 			}
-			if (nodes.second != null)
+			if (firstSecond != null)
 			{
-				nodes.second.RemoveEdge(this);
-				nodes.second = null;
+				firstSecond.RemoveEdge(this);
+				firstSecond = null;
 			}
+		}
+
+		private void CheckNodesValidity()
+		{
+			Assert.IsNotNull(firstNode, "Null first node on: " + gameObject.name);
+			Assert.IsNotNull(firstSecond, "Null second node on: " + gameObject.name);
+			Assert.IsFalse(firstNode == firstSecond, "Edge points to same node on: " + gameObject.name);
 		}
 	}
 }
