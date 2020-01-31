@@ -15,8 +15,8 @@ namespace Polyjam2020.Tests
         {
             SceneManager.LoadScene("UnitMovementTest");
             yield return null;
-            var movement = GameObject.FindObjectOfType<UnitMovementController>();
-            var points = GameObject.FindObjectOfType<PointSet>().Points;
+            var movement = Object.FindObjectOfType<UnitMovementController>();
+            var points = Object.FindObjectOfType<PointSet>().Points;
 
             foreach (var currentPoint in points)
             {
