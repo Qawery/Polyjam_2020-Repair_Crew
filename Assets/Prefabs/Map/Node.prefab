@@ -911,6 +911,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   livingElements: {fileID: 3231869462888066448}
+  fires: {fileID: 2820006131048421755}
   rubble: {fileID: 7719734444029910073}
 --- !u!114 &-3046359883343153574
 MonoBehaviour:
