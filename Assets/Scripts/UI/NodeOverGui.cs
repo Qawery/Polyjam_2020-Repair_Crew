@@ -15,15 +15,16 @@ namespace Polyjam2020
 		{
 			Assert.IsNotNull(node);
 			Assert.IsNotNull(healthBar);
-			node.OnHealthChanged += OnHealthChanged;
-			OnHealthChanged();
+			var health = node.GetComponent<HealthComponent>();
+			health.OnValueChanged += OnHealthChanged;
+			OnHealthChanged((health.CurrentValue, health.CurrentValue));
 		}
 
-		private void OnHealthChanged()
+		private void OnHealthChanged((int previous, int current) data)
 		{
-			if (node.CurrentHealth > 0.0f)
+			if (data.current > 0.0f)
 			{
-				healthBar.normalizedValue = node.CurrentHealth / Node.MAX_HEALTH;
+				healthBar.normalizedValue = ((float)data.current) / node.GetComponent<HealthComponent>().MaxValue;
 			}
 			else
 			{
