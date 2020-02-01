@@ -58,7 +58,9 @@ namespace Polyjam2020
 			float unadjustedRoadLength = segmentsInRoad * segmentLength;
 			float scale = roadLength / unadjustedRoadLength;
 
-			firstSegment.transform.localScale *= scale;
+			Vector3 modifiedScale = firstSegment.transform.localScale;
+			modifiedScale.z *= scale;
+			firstSegment.transform.localScale = modifiedScale;
 			firstSegment.transform.rotation = Quaternion.LookRotation(roadVec);
 			Vector3 offset = Nodes.first.transform.position - firstSegment.Start.position;
 			firstSegment.transform.position += offset;
