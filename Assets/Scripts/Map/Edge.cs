@@ -8,7 +8,7 @@ namespace Polyjam2020
 	{
 		[SerializeField] private Node firstNode = null;
 		[SerializeField] private Node firstSecond = null;
-
+		[SerializeField] private RoadSegment roadSegmentPrefab = null;
 
 		public (Node first, Node second) Nodes
 		{
