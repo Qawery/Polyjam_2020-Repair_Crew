@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 
@@ -23,14 +24,14 @@ namespace Polyjam2020
 				CheckNodesValidity();
 				firstNode.AddEdge(this);
 				firstSecond.AddEdge(this);
-				//TODO: Wyswietlanie i pozycjonowanie
+				GenerateRoad();
 			}
 		}
-
 
 		private void Start()
 		{
 			CheckNodesValidity();
+			GenerateRoad();
 		}
 
 		private void OnDestroy()
@@ -44,6 +45,42 @@ namespace Polyjam2020
 			{
 				firstSecond.RemoveEdge(this);
 				firstSecond = null;
+			}
+		}
+
+		private void GenerateRoad()
+		{
+			var firstSegment = World.Instance.InstantiateObject(roadSegmentPrefab);
+			Vector3 roadVec = (Nodes.second.transform.position - Nodes.first.transform.position).Flat();
+			float roadLength = roadVec.magnitude;
+			float segmentLength = Vector3.Distance(firstSegment.Start.position, firstSegment.End.position);
+			int segmentsInRoad = (int) (roadLength / segmentLength);
+			float unadjustedRoadLength = segmentsInRoad * segmentLength;
+			float scale = roadLength / unadjustedRoadLength;
+
+			Vector3 modifiedScale = firstSegment.transform.localScale;
+			modifiedScale.z *= scale;
+			firstSegment.transform.localScale = modifiedScale;
+			firstSegment.transform.rotation = Quaternion.LookRotation(roadVec);
+			Vector3 offset = Nodes.first.transform.position - firstSegment.Start.position;
+			firstSegment.transform.position += offset;
+
+			var allSegments = new List<RoadSegment>();
+			allSegments.Add(firstSegment);
+
+			Vector3 previousSegmentEndPos = firstSegment.End.position;
+			for (int i = 1; i < segmentsInRoad; ++i)
+			{
+				var segment = World.Instance.InstantiateObject(firstSegment);
+				offset = previousSegmentEndPos - segment.Start.position;
+				segment.transform.position += offset;
+				previousSegmentEndPos = segment.End.position;
+				allSegments.Add(segment);
+			}
+
+			foreach (var segment in allSegments)
+			{
+				segment.transform.SetParent(transform);
 			}
 		}
 

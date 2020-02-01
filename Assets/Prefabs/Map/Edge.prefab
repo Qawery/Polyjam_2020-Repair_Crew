@@ -45,3 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstNode: {fileID: 0}
   firstSecond: {fileID: 0}
+  roadSegmentPrefab: {fileID: 3601060166095160212, guid: 932136b8fe59d3d45bce975cd3f87d2d,
+    type: 3}
