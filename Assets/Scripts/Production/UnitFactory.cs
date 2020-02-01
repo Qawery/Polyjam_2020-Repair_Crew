@@ -63,6 +63,7 @@ namespace Polyjam2020
 			var producedUnit = World.Instance.InstantiateObject(productionData.Unit);
 			producedUnit.transform.position = spawnSlot.transform.position;
 			producedUnit.transform.rotation = spawnSlot.transform.rotation;
+			producedUnit.GetComponent<UnitMovementController>().StopMovement();
 			return producedUnit;
 		}
 	}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitProductionData:
   - Unit: {fileID: -5081359141332239021, guid: 09978067545ab5442bd20cc91e27117c, type: 3}
-    ProductionCost: 1
+    ProductionCost: 2
     ProductionTime: 0
 --- !u!1001 &6852353887738130416
 PrefabInstance:
@@ -23,6 +23,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1231895433117361393, guid: b5cc00891352d8f468f79380306b62d2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 16590b45db07d614fb01efebacee4939, type: 2}
     - target: {fileID: 5225039143135312498, guid: b5cc00891352d8f468f79380306b62d2,
         type: 3}
       propertyPath: m_LocalPosition.x
