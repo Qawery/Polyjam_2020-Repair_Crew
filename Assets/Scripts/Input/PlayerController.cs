@@ -79,8 +79,7 @@ namespace Polyjam2020
 						var targetNode = hit.collider.GetComponent<Node>();
 						Assert.IsNotNull(targetNode, $"There is no node component on {hit.collider.gameObject.name} and yet it's on Nodes physics layer");
 
-						if (sourceNode.Edges.Exists(edge =>
-							edge.Nodes.first == targetNode || edge.Nodes.second == targetNode))
+						if (sourceNode.Edges.Exists(edge => edge.Nodes.first == targetNode || edge.Nodes.second == targetNode))
 						{
 							movement.MoveToPoint(hit.collider.transform.position);
 						}
