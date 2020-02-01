@@ -17,8 +17,7 @@ namespace Polyjam2020
 			Assert.IsNotNull(gameplayManager);
 			gameplayManager.OnDefeat += () =>
 				{
-					gameObject.SetActive(true);
-					
+					gameObject.SetActive(true);					
 					score.text = "Score: " + gameplayManager.Score.ToString("#.#");
 				};
 			if (!gameplayManager.IsDefeat)
