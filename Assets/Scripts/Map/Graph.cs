@@ -22,5 +22,7 @@ namespace Polyjam2020
 				edge.Nodes.second.AddEdge(edge);
 			}
 		}
+
+		//TODO: W przypadku dospwanowywanie nodow dorzucić ty logikę przypinania krawedzi
 	}
 }
