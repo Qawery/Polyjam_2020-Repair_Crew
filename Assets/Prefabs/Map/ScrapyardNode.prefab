@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitScrapData:
   - UnitClass: {fileID: 11400000, guid: 0abe7429c260ef34aa62c0b37e460cd6, type: 2}
-    GainFromScrapping: 2
+    GainFromScrapping: 1
     ScrapTime: 0
 --- !u!1001 &9123457491853837583
 PrefabInstance:

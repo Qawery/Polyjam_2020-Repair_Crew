@@ -34,7 +34,7 @@ namespace Polyjam2020.Tests
 
             yield return null;
             Assert.IsFalse(factory.GetComponent<Node>().UnitSlots.Exists(slot => !slot.IsOccupied));
-            Assert.IsTrue(resourceManager.ResourcesRemaining == (resourceManager.MaxResources - slotCount));
+            Assert.IsTrue(resourceManager.ResourcesRemaining == (resourceManager.MaxResources - slotCount * helper.FactoryToFillOut.UnitProductionData[0].ProductionCost));
         }
         
         [UnityTest]

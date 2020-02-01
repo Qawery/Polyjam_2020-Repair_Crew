@@ -94,7 +94,16 @@ namespace Polyjam2020
 			{
 				return;
 			}
-			
+
+			if (SelectedNode != null)
+			{
+				if (Input.GetKeyDown(KeyCode.Mouse1))
+				{
+					SelectedNode = null;
+					return;
+				}
+			}
+
 			if (Input.GetKeyUp(KeyCode.Mouse0))
 			{
 				var selectionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
