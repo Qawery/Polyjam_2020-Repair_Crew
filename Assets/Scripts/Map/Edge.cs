@@ -50,7 +50,12 @@ namespace Polyjam2020
 
 		private void GenerateRoad()
 		{
-			var firstSegment = World.Instance.InstantiateObject(roadSegmentPrefab);
+			if (roadSegmentPrefab == null)
+			{
+				return;
+			}
+			
+			var firstSegment = Instantiate(roadSegmentPrefab);
 			Vector3 roadVec = (Nodes.second.transform.position - Nodes.first.transform.position).Flat();
 			float roadLength = roadVec.magnitude;
 			float segmentLength = Vector3.Distance(firstSegment.Start.position, firstSegment.End.position);
@@ -71,7 +76,7 @@ namespace Polyjam2020
 			Vector3 previousSegmentEndPos = firstSegment.End.position;
 			for (int i = 1; i < segmentsInRoad; ++i)
 			{
-				var segment = World.Instance.InstantiateObject(firstSegment);
+				var segment = Instantiate(firstSegment);
 				offset = previousSegmentEndPos - segment.Start.position;
 				segment.transform.position += offset;
 				previousSegmentEndPos = segment.End.position;

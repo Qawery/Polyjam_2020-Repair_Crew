@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using NUnit.Framework;
+using Polyjam2020.Tests;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
@@ -12,10 +13,8 @@ namespace Polyjam2020
 	public class UnitTests : MonoBehaviour
 	{
 		private const string TEST_SCENE_NAME = "UnitTestScene";
-		private const float CHANGE_AMOUNT = 0.01f;
-		private const int TEST_DURATION_IN_FRAMES = 5;
-		private const float TOLERANCE = 0.01f;
-
+		private const int CHANGE_AMOUNT = 1;
+		private const float TEST_DURATION_IN_SECONDS = 2.0f;
 
 		[UnityTest]
 		public IEnumerator UnitDetectNode()
@@ -44,24 +43,23 @@ namespace Polyjam2020
 			Assert.IsTrue(SceneManager.GetActiveScene().name == TEST_SCENE_NAME, "Test scene not loaded");
 			var node = Object.FindObjectOfType<Node>();
 			Assert.IsNotNull(node, "Missing node");
-			var unit = Object.FindObjectOfType<Unit>();
-			Assert.IsNotNull(unit, "Missing unit");
-			Assert.IsTrue(Math.Abs(node.CurrentHealth - Node.MAX_HEALTH) < TOLERANCE);
-			node.ApplyDamage(CHANGE_AMOUNT);
-			for (int i = 0; i < TEST_DURATION_IN_FRAMES; ++i)
-			{
-				Assert.IsTrue(Math.Abs(node.CurrentHealth - (Node.MAX_HEALTH - CHANGE_AMOUNT)) < TOLERANCE);
-				yield return null;
-			}
-			unit.transform.position = node.transform.position;
-			float previousHealth = node.CurrentHealth;
-			for (int i = 0; i < TEST_DURATION_IN_FRAMES; ++i)
-			{
-				yield return null;
-				Assert.IsTrue(node.CurrentHealth >= previousHealth);
-				previousHealth = node.CurrentHealth;
-			}
-			Assert.IsTrue(Math.Abs(node.CurrentHealth - Node.MAX_HEALTH) < TOLERANCE);
+			var helper = FindObjectOfType<UnitTestHelper>();
+			Assert.IsNotNull(helper);
+			Assert.IsNotNull(helper.HealingUnit);
+			var health = node.GetComponent<HealthComponent>();
+			Assert.IsTrue(health.CurrentValue == health.MaxValue);
+			health.ApplyDamage(CHANGE_AMOUNT);
+			Assert.IsTrue(health.CurrentValue == health.MaxValue - CHANGE_AMOUNT);
+			helper.HealingUnit.transform.position = node.transform.position;
+			float previousHealth = health.CurrentValue;
+			yield return new WaitForSeconds(TEST_DURATION_IN_SECONDS);
+			Assert.IsTrue(health.CurrentValue == health.MaxValue);
+		}
+		
+		[UnityTest]
+		public IEnumerator UnitRemoveStatus()
+		{
+			yield return null;
 		}
 	}
 }

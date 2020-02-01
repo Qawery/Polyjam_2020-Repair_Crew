@@ -10,7 +10,7 @@ namespace Polyjam2020
 	{
 		public class NodeTest
 		{
-			private const float CHANGE_VALUE = 1.0f;
+			private const int CHANGE_VALUE = 20;
 
 
 			[Test]
@@ -18,16 +18,18 @@ namespace Polyjam2020
 			{
 				var gameObject = new GameObject();
 				var node = gameObject.AddComponent<Node>();
-				Assert.IsTrue(CHANGE_VALUE < Node.MAX_HEALTH);
-				Assert.IsTrue(node.CurrentHealth == Node.MAX_HEALTH);
-				node.ApplyDamage(CHANGE_VALUE);
-				Assert.IsTrue(node.CurrentHealth == Node.MAX_HEALTH - CHANGE_VALUE);
-				node.ApplyHeal(CHANGE_VALUE);
-				Assert.IsTrue(node.CurrentHealth == Node.MAX_HEALTH);
-				node.ApplyDamage(2 * Node.MAX_HEALTH);
-				Assert.IsTrue(node.CurrentHealth == 0.0f);
-				node.ApplyHeal(2 * Node.MAX_HEALTH);
-				Assert.IsTrue(node.CurrentHealth == 0.0f);
+				var health = gameObject.AddComponent<HealthComponent>();
+				Assert.IsNotNull(health);
+				Assert.IsTrue(CHANGE_VALUE < health.MaxValue);
+				Assert.IsTrue(health.CurrentValue == health.MaxValue);
+				health.ApplyDamage(CHANGE_VALUE);
+				Assert.IsTrue(health.CurrentValue == health.MaxValue - CHANGE_VALUE);
+				health.ApplyHeal(CHANGE_VALUE);
+				Assert.IsTrue(health.CurrentValue == health.MaxValue);
+				health.ApplyDamage(2 * health.MaxValue);
+				Assert.IsTrue(health.CurrentValue == 0);
+				health.ApplyHeal(2 * health.MaxValue);
+				Assert.IsTrue(health.CurrentValue == 0);
 			}
 
 			[UnityTest]

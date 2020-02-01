@@ -7,13 +7,9 @@ namespace Polyjam2020
 {
 	public class Node : MonoBehaviour
 	{
-		public const float MAX_HEALTH = 5.0f;
-		private float currentHealth = MAX_HEALTH;
 		private List<Edge> edges = new List<Edge>();
 		
-		
 		public List<UnitSlot> UnitSlots { get; } = new List<UnitSlot>();
-		public float CurrentHealth => currentHealth;
 		public List<Edge> Edges => edges;
 
 
@@ -46,23 +42,6 @@ namespace Polyjam2020
 		public void RemoveEdge(Edge edge)
 		{
 			edges.Remove(edge);
-		}
-
-		public void ApplyDamage(float value)
-		{
-			Assert.IsTrue(value > 0.0f, "Trying to apply damage not greater than zero on: " + gameObject.name);
-			currentHealth -= value;
-			currentHealth = Mathf.Max(currentHealth, 0.0f);
-		}
-
-		public void ApplyHeal(float value)
-		{
-			Assert.IsTrue(value > 0.0f, "Trying to apply heal not greater than zero on: " + gameObject.name);
-			if (currentHealth > 0.0f)
-			{
-				currentHealth += value;
-				currentHealth = Mathf.Min(currentHealth, MAX_HEALTH);
-			}
 		}
 	}
 }

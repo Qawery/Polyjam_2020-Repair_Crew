@@ -28,10 +28,12 @@ namespace Polyjam2020
 			Assert.IsNotNull(graph, "No graph on scene");
 			var gameplayManager = Object.FindObjectOfType<GameplayManager>();
 			Assert.IsNotNull(gameplayManager, "No gameplayManager on scene");
+			gameplayManager.OnDefeat += OnDefeat;
 			Assert.IsFalse(gameplayManager.IsDefeat, "GameplayManager registered defeat too early");
 			for (int i = 0; i < graph.Nodes.Count / 2; ++i)
 			{
-				graph.Nodes[i].ApplyDamage(Node.MAX_HEALTH);
+				var health = graph.Nodes[i].GetComponent<HealthComponent>();
+				health.ApplyDamage(health.MaxValue);
 			}
 			yield return null;
 			Assert.IsTrue(gameplayManager.IsDefeat, "GameplayManager didn't register defeat after destroying half of cities");

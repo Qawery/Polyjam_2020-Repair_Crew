@@ -22,12 +22,9 @@ namespace Polyjam2020
 
 		public bool IsDefeat
 		{
-			get
-			{
-				return isDefeat;
-			}
+			get => isDefeat;
 
-			set
+			private set
 			{
 				isDefeat = value;
 				if (isDefeat)
@@ -59,7 +56,7 @@ namespace Polyjam2020
 			int destroyedCities = 0;
 			foreach (var node in graph.Nodes)
 			{
-				if (node.CurrentHealth <= 0.0f)
+				if (node.GetComponent<HealthComponent>().CurrentValue <= 0)
 				{
 					++destroyedCities;
 				}
@@ -70,17 +67,7 @@ namespace Polyjam2020
 				StartCoroutine(GameEndCoroutine());
 				return;
 			}
-			if (nodeDamageCooldown > 0.0f)
-			{
-				nodeDamageCooldown -= Time.deltaTime;
-			}
-			else
-			{
-				nodeDamageCooldown = timeBetweenNodeDamage;
-				var aliveNodes = graph.Nodes.Where(t => t.CurrentHealth > 0.0f).ToList<Node>();
-				int nodeToDamageIndex = Random.Range(0, aliveNodes.Count);
-				aliveNodes[nodeToDamageIndex].ApplyDamage(Node.MAX_HEALTH / 2.0f);
-			}
+			
 			score += Time.deltaTime;
 		}
 

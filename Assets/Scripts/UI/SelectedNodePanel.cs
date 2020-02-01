@@ -63,7 +63,8 @@ namespace Polyjam2020
 				}
 
 				nameText.text = text;
-				healthText.text = $"Health: {node.CurrentHealth} / {Node.MAX_HEALTH}";
+				var health = node.GetComponent<HealthComponent>();
+				healthText.text = $"Health: {health.CurrentValue} / {health.MaxValue}";
 				unitSlotText.text = $"Unit Slots: {node.UnitSlots.Count(slot => !slot.IsOccupied)} / {node.UnitSlots.Count}";
 				edgeText.text = $"Edges: {node.Edges.Count}";
 				gameObject.SetActive(true);
