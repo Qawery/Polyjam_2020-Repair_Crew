@@ -12,10 +12,7 @@ namespace Polyjam2020
 
 		public (Node first, Node second) Nodes
 		{
-			get
-			{
-				return (firstNode, firstSecond);
-			}
+			get => (firstNode, firstSecond);
 
 			set
 			{
