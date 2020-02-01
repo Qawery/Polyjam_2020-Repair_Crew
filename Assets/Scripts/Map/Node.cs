@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
 
@@ -11,10 +10,12 @@ namespace Polyjam2020
 		public const float MAX_HEALTH = 5.0f;
 		private float currentHealth = MAX_HEALTH;
 		private List<Edge> edges = new List<Edge>();
+		
+		
 		public List<UnitSlot> UnitSlots { get; } = new List<UnitSlot>();
-
 		public float CurrentHealth => currentHealth;
 		public List<Edge> Edges => edges;
+
 
 		private void Awake()
 		{
@@ -57,8 +58,11 @@ namespace Polyjam2020
 		public void ApplyHeal(float value)
 		{
 			Assert.IsTrue(value > 0.0f, "Trying to apply heal not greater than zero on: " + gameObject.name);
-			currentHealth += value;
-			currentHealth = Mathf.Min(currentHealth, MAX_HEALTH);
+			if (currentHealth > 0.0f)
+			{
+				currentHealth += value;
+				currentHealth = Mathf.Min(currentHealth, MAX_HEALTH);
+			}
 		}
 	}
 }

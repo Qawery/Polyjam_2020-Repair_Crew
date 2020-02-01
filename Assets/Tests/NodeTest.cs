@@ -27,7 +27,7 @@ namespace Polyjam2020
 				node.ApplyDamage(2 * Node.MAX_HEALTH);
 				Assert.IsTrue(node.CurrentHealth == 0.0f);
 				node.ApplyHeal(2 * Node.MAX_HEALTH);
-				Assert.IsTrue(node.CurrentHealth == Node.MAX_HEALTH);
+				Assert.IsTrue(node.CurrentHealth == 0.0f);
 			}
 
 			[UnityTest]

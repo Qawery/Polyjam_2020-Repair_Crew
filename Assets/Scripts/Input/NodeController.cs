@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+
 
 namespace Polyjam2020
 {
@@ -11,6 +11,8 @@ namespace Polyjam2020
 		private List<Node> nodes = new List<Node>();
 		private Node selectedNode = null;
 		private UnitController unitController;
+		public event System.Action<Node> OnSelectedNodeChanged;
+
 
 		private Node SelectedNode
 		{
@@ -20,21 +22,17 @@ namespace Polyjam2020
 				if (selectedNode != null && selectedNode != value)
 				{
 					selectedNode.GetComponent<NodeSelectionComponent>().Deselect();
-				}
-				
-				selectedNode = value;
-				
+				}				
+				selectedNode = value;				
 				if (selectedNode != value)
 				{
 					selectedNode.GetComponent<NodeSelectionComponent>().Select();
-				}
-				
+				}				
 				OnSelectedNodeChanged?.Invoke(selectedNode);
 			}
 		}
 
-		public event System.Action<Node> OnSelectedNodeChanged;
-		
+
 		[SpawnHandlerMethod]
 		private void OnNodeSpawned(Node spawnedNode)
 		{
@@ -59,7 +57,6 @@ namespace Polyjam2020
 					registeredNode.GetComponent<UnitSelectionComponent>().Deselect();
 				}
 			}
-
 			selectedNode = node;
 		}
 
@@ -94,7 +91,6 @@ namespace Polyjam2020
 			{
 				return;
 			}
-
 			if (SelectedNode != null)
 			{
 				if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -103,7 +99,6 @@ namespace Polyjam2020
 					return;
 				}
 			}
-
 			if (Input.GetKeyUp(KeyCode.Mouse0))
 			{
 				var selectionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
