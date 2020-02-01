@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Tests/UnitMovementTest.unity
     guid: cf8a6012a6e21be4b884c11ae695fc9c
   - enabled: 1
-    path: Assets/Scenes/Tests/NodeMovementTest.unity
+    path: Assets/Scenes/Game.unity
     guid: e5f117f64d693764c9095cf133c3a478
   - enabled: 1
     path: Assets/Scenes/Tests/ProductionAndScrappingTest.unity

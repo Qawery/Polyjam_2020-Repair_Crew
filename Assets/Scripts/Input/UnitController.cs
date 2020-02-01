@@ -7,6 +7,7 @@ namespace Polyjam2020
 	public class UnitController : MonoBehaviour
 	{
 		[SerializeField] private LayerMask movementTargetLayers;
+		[SerializeField] private LayerMask unitClickLayer;
 
 		private List<Unit> selectableUnits = new List<Unit>();
 		private Unit selectedUnit = null;
@@ -16,7 +17,18 @@ namespace Polyjam2020
 			get => selectedUnit;
 			set
 			{
+				if (selectedUnit != null && selectedUnit != value)
+				{
+					selectedUnit.GetComponent<UnitSelectionComponent>().Deselect();
+				}
+				
 				selectedUnit = value;
+				
+				if (selectedUnit != value)
+				{
+					selectedUnit.GetComponent<UnitSelectionComponent>().Select();
+				}
+				
 				OnSelectedUnitChanged?.Invoke(selectedUnit);
 			}
 		}
@@ -50,67 +62,92 @@ namespace Polyjam2020
 				}
 			}
 
-			SelectedUnit = unit;
+			selectedUnit = unit;
 		}
 
 		private void OnUnitDeselected(Unit unit)
 		{
 			if (unit == SelectedUnit)
 			{
-				SelectedUnit = null;
+				selectedUnit = null;
 			}
 		}
 
 		private void Update()
 		{
-			if (SelectedUnit != null)
-			{
-				ProcessUnitOrders();
-			}
+			ProcesUnitControls();
 		}
 
-		private void ProcessUnitOrders()
+		private void ProcesUnitControls()
 		{
-			if (Input.GetKeyDown(KeyCode.Mouse1))
-			{
-				SelectedUnit.GetComponent<UnitSelectionComponent>().Deselect();
-				return;
-			}
-			
 			if (Input.GetKeyUp(KeyCode.Mouse0))
 			{
-				var movement = SelectedUnit.GetComponent<UnitMovementController>();
-				Assert.IsNotNull(movement, $"Missing movement controller on {SelectedUnit.name}");
-
-				var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-				if (Physics.Raycast(ray, out var hit, 100, movementTargetLayers))
+				var unitSelectionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+				if (Physics.Raycast(unitSelectionRay, out var unitHit, 100, unitClickLayer))
 				{
-					var sourceNode = SelectedUnit.NodeUnderEffect;
-					if (sourceNode != null)
-					{
-						var targetNode = hit.collider.GetComponent<Node>();
-						Assert.IsNotNull(targetNode, $"There is no node component on {hit.collider.gameObject.name} and yet it's on Nodes physics layer");
+					var unit = unitHit.collider.GetComponent<Unit>();
+					Assert.IsNotNull(unit,
+						$"There is no Unit component on {unitHit.collider.gameObject.name} and yet it's on Units physics layer");
 
-						if (targetNode == sourceNode)
+					if (unit == SelectedUnit)
+					{
+						SelectedUnit = null;
+					}
+					else
+					{
+						SelectedUnit = unit;
+					}
+
+					return;
+				}
+			}
+
+			if (SelectedUnit != null)
+			{
+				if (Input.GetKeyDown(KeyCode.Mouse1))
+				{
+					SelectedUnit.GetComponent<UnitSelectionComponent>().Deselect();
+					return;
+				}
+
+				if (Input.GetKeyUp(KeyCode.Mouse0))
+				{
+					var movement = SelectedUnit.GetComponent<UnitMovementController>();
+					Assert.IsNotNull(movement, $"Missing movement controller on {SelectedUnit.name}");
+
+					var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+					if (Physics.Raycast(ray, out var hit, 100, movementTargetLayers))
+					{
+						var sourceNode = SelectedUnit.NodeUnderEffect;
+						if (sourceNode != null)
 						{
-							return;
-						}
-						
-						if (sourceNode.Edges.Exists(edge => edge.Nodes.first == targetNode || edge.Nodes.second == targetNode))
-						{
-							var slot = targetNode.UnitSlots.Find(candidate => !candidate.IsOccupied);
-							if (slot != null)
+							var targetNode = hit.collider.GetComponent<Node>();
+							Assert.IsNotNull(targetNode,
+								$"There is no node component on {hit.collider.gameObject.name} and yet it's on Nodes physics layer");
+
+							if (targetNode == sourceNode)
 							{
-								movement.MoveToPoint(slot.transform.position);
+								return;
+							}
+
+							if (sourceNode.Edges.Exists(edge =>
+								edge.Nodes.first == targetNode || edge.Nodes.second == targetNode))
+							{
+								var slot = targetNode.UnitSlots.Find(candidate => !candidate.IsOccupied);
+								if (slot != null)
+								{
+									movement.MoveToPoint(slot.transform.position);
+								}
+								else
+								{
+									Debug.Log($"No free slots on {targetNode}. Can't perform movement action");
+								}
 							}
 							else
 							{
-								Debug.Log($"No free slots on {targetNode}. Can't perform movement action");
+								Debug.Log(
+									$"No direct edge from {sourceNode.name} to {targetNode.name}. Can't perform movement action");
 							}
-						}
-						else
-						{
-							Debug.Log($"No direct edge from {sourceNode.name} to {targetNode.name}. Can't perform movement action");
 						}
 					}
 				}

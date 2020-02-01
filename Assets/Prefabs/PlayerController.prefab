@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7987806775816388968}
   - component: {fileID: 7987806775816388967}
   - component: {fileID: 7200937721488122796}
+  - component: {fileID: 6046087670972553211}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -47,6 +48,9 @@ MonoBehaviour:
   movementTargetLayers:
     serializedVersion: 2
     m_Bits: 256
+  unitClickLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &7200937721488122796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,3 +66,15 @@ MonoBehaviour:
   resourceRegenerationRate: 0
   resourceRegenerationInterval: 0
   maxResources: 10
+--- !u!114 &6046087670972553211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987806775816388966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9dacd47d39cd584da5474f3e4878be3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
