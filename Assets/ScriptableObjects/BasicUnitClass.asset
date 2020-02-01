@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56dfb52b279451343877f0ca8b92171d, type: 3}
   m_Name: BasicUnitClass
   m_EditorClassIdentifier: 
+  DisplayName: Basic

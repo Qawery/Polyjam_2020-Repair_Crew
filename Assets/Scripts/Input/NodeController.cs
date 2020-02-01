@@ -10,6 +10,7 @@ namespace Polyjam2020
 		[SerializeField] private LayerMask nodeLayers;
 		private List<Node> nodes = new List<Node>();
 		private Node selectedNode = null;
+		private UnitController unitController;
 
 		private Node SelectedNode
 		{
@@ -18,14 +19,14 @@ namespace Polyjam2020
 			{
 				if (selectedNode != null && selectedNode != value)
 				{
-					selectedNode.GetComponent<UnitSelectionComponent>().Deselect();
+					selectedNode.GetComponent<NodeSelectionComponent>().Deselect();
 				}
 				
 				selectedNode = value;
 				
 				if (selectedNode != value)
 				{
-					selectedNode.GetComponent<UnitSelectionComponent>().Select();
+					selectedNode.GetComponent<NodeSelectionComponent>().Select();
 				}
 				
 				OnSelectedNodeChanged?.Invoke(selectedNode);
@@ -69,7 +70,19 @@ namespace Polyjam2020
 				selectedNode = null;
 			}
 		}
-		
+
+		private void Awake()
+		{
+			unitController = FindObjectOfType<UnitController>();
+			unitController.OnSelectedUnitChanged += unit =>
+			{
+				if (unit != null)
+				{
+					SelectedNode = null;
+				}
+			};
+		}
+
 		private void Update()
 		{
 			ProcessNodeControls();
@@ -77,6 +90,11 @@ namespace Polyjam2020
 
 		private void ProcessNodeControls()
 		{
+			if (unitController.SelectedUnit != null)
+			{
+				return;
+			}
+			
 			if (Input.GetKeyUp(KeyCode.Mouse0))
 			{
 				var selectionRay = Camera.main.ScreenPointToRay(Input.mousePosition);

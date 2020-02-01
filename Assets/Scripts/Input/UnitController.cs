@@ -11,11 +11,11 @@ namespace Polyjam2020
 
 		private List<Unit> selectableUnits = new List<Unit>();
 		private Unit selectedUnit = null;
-
-		private Unit SelectedUnit
+		
+		public Unit SelectedUnit
 		{
 			get => selectedUnit;
-			set
+			private set
 			{
 				if (selectedUnit != null && selectedUnit != value)
 				{
@@ -106,7 +106,7 @@ namespace Polyjam2020
 			{
 				if (Input.GetKeyDown(KeyCode.Mouse1))
 				{
-					SelectedUnit.GetComponent<UnitSelectionComponent>().Deselect();
+					SelectedUnit = null;
 					return;
 				}
 
