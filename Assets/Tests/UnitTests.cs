@@ -51,7 +51,6 @@ namespace Polyjam2020
 			health.ApplyDamage(CHANGE_AMOUNT);
 			Assert.IsTrue(health.CurrentValue == health.MaxValue - CHANGE_AMOUNT);
 			helper.HealingUnit.transform.position = node.transform.position;
-			float previousHealth = health.CurrentValue;
 			yield return new WaitForSeconds(TEST_DURATION_IN_SECONDS);
 			Assert.IsTrue(health.CurrentValue == health.MaxValue);
 		}
@@ -59,7 +58,22 @@ namespace Polyjam2020
 		[UnityTest]
 		public IEnumerator UnitRemoveStatus()
 		{
+			SceneManager.LoadScene(TEST_SCENE_NAME);
 			yield return null;
+			yield return null;
+			Assert.IsTrue(SceneManager.GetActiveScene().name == TEST_SCENE_NAME, "Test scene not loaded");
+			var node = Object.FindObjectOfType<Node>();
+			Assert.IsNotNull(node, "Missing node");
+			var helper = FindObjectOfType<UnitTestHelper>();
+			Assert.IsNotNull(helper);
+			Assert.IsNotNull(helper.StatusRemovingUnit);
+			node.AddStatus<FireStatus>();
+			yield return null;
+			yield return null;
+
+			helper.StatusRemovingUnit.transform.position = node.transform.position;
+			yield return new WaitForSeconds(TEST_DURATION_IN_SECONDS);
+			Assert.IsNull(node.GetComponent<FireStatus>());
 		}
 	}
 }

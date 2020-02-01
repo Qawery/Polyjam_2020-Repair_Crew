@@ -11,6 +11,9 @@ namespace Polyjam2020
 		public Node NodeUnderEffect => nodeUnderEffect;
 		public UnitClass UnitClass => unitClass;
 
+		public event System.Action<Node> OnEnteredNode;
+		public event System.Action<Node> OnLeftNode;
+
 		private void Awake()
 		{
 			var trigger = GetComponent<Collider>();
@@ -25,6 +28,7 @@ namespace Polyjam2020
 			{
 				Assert.IsNull(nodeUnderEffect, "NodeUnderEffect already present on: " + gameObject.name);
 				nodeUnderEffect = otherNode;
+				OnEnteredNode?.Invoke(nodeUnderEffect);
 			}
 		}
 
@@ -34,7 +38,8 @@ namespace Polyjam2020
 			if (otherNode != null)
 			{
 				Assert.IsTrue(nodeUnderEffect == otherNode, "Exiting trigger with node different than nodeUnderEffect on: " + gameObject.name);
-				nodeUnderEffect = null; ;
+				OnLeftNode?.Invoke(nodeUnderEffect);
+				nodeUnderEffect = null;
 			}
 		}
 	}

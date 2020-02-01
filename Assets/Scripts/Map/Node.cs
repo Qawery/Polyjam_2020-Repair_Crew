@@ -8,10 +8,11 @@ namespace Polyjam2020
 	public class Node : MonoBehaviour
 	{
 		private List<Edge> edges = new List<Edge>();
-		
 		public List<UnitSlot> UnitSlots { get; } = new List<UnitSlot>();
 		public List<Edge> Edges => edges;
 
+		public event System.Action<NodeStatus> OnStatusReceived;
+		public event System.Action<NodeStatus> OnStatusRemoved;
 
 		private void Awake()
 		{
@@ -42,6 +43,29 @@ namespace Polyjam2020
 		public void RemoveEdge(Edge edge)
 		{
 			edges.Remove(edge);
+		}
+
+		public StatusType AddStatus<StatusType>() where StatusType : NodeStatus
+		{
+			var oldStatus = gameObject.GetComponent<StatusType>();
+			if (oldStatus != null)
+			{
+				return null;
+			}
+			
+			var status = gameObject.AddComponent<StatusType>();
+			OnStatusReceived?.Invoke(status);
+			return status;
+		}
+
+		public void RemoveStatus<StatusType>() where StatusType : NodeStatus
+		{
+			var status = GetComponent<StatusType>();
+			if (status != null)
+			{
+				OnStatusRemoved?.Invoke(status);
+				Destroy(status);
+			}
 		}
 	}
 }

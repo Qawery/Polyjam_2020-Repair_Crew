@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitScrapData:
-  - UnitClass: {fileID: 11400000, guid: 0abe7429c260ef34aa62c0b37e460cd6, type: 2}
+  - UnitClass: {fileID: 11400000, guid: 5eb1c05ae27cb9245820e5c90cd44625, type: 2}
+    GainFromScrapping: 1
+    ScrapTime: 0
+  - UnitClass: {fileID: 11400000, guid: e183248a52c7bc24382a2610bc866885, type: 2}
     GainFromScrapping: 1
     ScrapTime: 0
 --- !u!1001 &9123457491853837583
