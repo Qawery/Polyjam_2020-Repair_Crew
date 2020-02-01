@@ -18,8 +18,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Tests/UnitMovementTest.unity
     guid: cf8a6012a6e21be4b884c11ae695fc9c
   - enabled: 1
-    path: Assets/Scenes/Tests/PlayerControllerTest.unity
+    path: Assets/Scenes/Tests/NodeMovementTest.unity
     guid: e5f117f64d693764c9095cf133c3a478
+  - enabled: 1
+    path: Assets/Scenes/Tests/ProductionAndScrappingTest.unity
+    guid: 15fc9d325a0d673428d9e8a6e0e65bbc
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 5efc8e41f915e01498ef297b79755c31,
       type: 2}

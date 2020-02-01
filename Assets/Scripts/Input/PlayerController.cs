@@ -79,9 +79,22 @@ namespace Polyjam2020
 						var targetNode = hit.collider.GetComponent<Node>();
 						Assert.IsNotNull(targetNode, $"There is no node component on {hit.collider.gameObject.name} and yet it's on Nodes physics layer");
 
+						if (targetNode == sourceNode)
+						{
+							return;
+						}
+						
 						if (sourceNode.Edges.Exists(edge => edge.Nodes.first == targetNode || edge.Nodes.second == targetNode))
 						{
-							movement.MoveToPoint(hit.collider.transform.position);
+							var slot = targetNode.UnitSlots.Find(candidate => !candidate.IsOccupied);
+							if (slot != null)
+							{
+								movement.MoveToPoint(hit.collider.transform.position);
+							}
+							else
+							{
+								Debug.Log($"No free slots on {targetNode}. Can't perform movement action");
+							}
 						}
 						else
 						{

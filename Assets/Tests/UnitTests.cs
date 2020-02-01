@@ -14,7 +14,7 @@ namespace Polyjam2020
 		private const string TEST_SCENE_NAME = "UnitTestScene";
 		private const float CHANGE_AMOUNT = 0.01f;
 		private const int TEST_DURATION_IN_FRAMES = 5;
-		private const float TOLERANCE = 0.001f;
+		private const float TOLERANCE = 0.01f;
 
 
 		[UnityTest]

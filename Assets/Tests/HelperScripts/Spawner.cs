@@ -9,7 +9,7 @@ namespace Polyjam2020.Tests
 
 		private void Start()
 		{
-			World.Instance.Instantiate(objectToSpawn);
+			World.Instance.InstantiateObject(objectToSpawn);
 		}
 	}
 }
