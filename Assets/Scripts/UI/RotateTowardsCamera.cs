@@ -12,7 +12,10 @@ namespace Polyjam2020
 		private void Awake()
 		{
 			camera = Object.FindObjectOfType<Camera>();
-			Assert.IsNotNull(camera);
+			if (camera == null)
+			{
+				Destroy(this);
+			}
 		}
 
 		private void LateUpdate()
