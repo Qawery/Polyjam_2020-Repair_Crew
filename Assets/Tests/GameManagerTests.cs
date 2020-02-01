@@ -10,7 +10,13 @@ namespace Polyjam2020
 	public class GameManagerTests : MonoBehaviour
 	{
 		private const string TEST_SCENE_NAME = "GameplayManagerTestScene";
+		private bool wasDefeat = false;
 
+
+		private void OnDefeat()
+		{
+			wasDefeat = true;
+		}
 
 		[UnityTest]
 		public IEnumerator DefeatAndTransitionToMainMenu()
@@ -29,6 +35,7 @@ namespace Polyjam2020
 			}
 			yield return null;
 			Assert.IsTrue(gameplayManager.IsDefeat, "GameplayManager didn't register defeat after destroying half of cities");
+			Assert.IsTrue(wasDefeat, "GameplayManager didn't called event on defeat");
 			yield return new WaitForSeconds(5.0f);
 			yield return null;
 			Assert.IsTrue(SceneManager.GetActiveScene().name == "MainMenu", "Not returned to main menu after defeat");

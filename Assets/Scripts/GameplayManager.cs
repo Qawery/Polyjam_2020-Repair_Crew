@@ -2,35 +2,59 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.Assertions;
 using System.Collections;
+using System.Linq;
 
 
 namespace Polyjam2020
 {
 	public class GameplayManager : MonoBehaviour
 	{
-		//[SerializeField] private GameObject defeatScreen = null;
+		private float score = 0.0f;
 		private int destroyedCitiesLimit = 0;
 		private bool isDefeat = false;
 		private Graph graph = null;
+		public System.Action OnDefeat;
+		private float timeBetweenNodeDamage = 5.0f;
+		private float nodeDamageCooldown = 2.0f;
 
 
-		public bool IsDefeat => isDefeat;
+		public float Score => score;
+
+		public bool IsDefeat
+		{
+			get
+			{
+				return isDefeat;
+			}
+
+			set
+			{
+				isDefeat = value;
+				if (isDefeat)
+				{
+					OnDefeat?.Invoke();
+				}
+			}
+		}
 
 
 		private void Awake()
 		{
-			//Assert.IsNotNull(defeatScreen);
-			//defeatScreen.gameObject.SetActive(false);
 			graph = Object.FindObjectOfType<Graph>();
 			Assert.IsNotNull(graph);
 			destroyedCitiesLimit = graph.Nodes.Count / 2;
+			nodeDamageCooldown = timeBetweenNodeDamage;
 		}
 
 		private void LateUpdate()
 		{
-			if (isDefeat)
+			if (IsDefeat)
 			{
 				return;
+			}
+			if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				SceneManager.LoadScene("MainMenu");
 			}
 			int destroyedCities = 0;
 			foreach (var node in graph.Nodes)
@@ -42,10 +66,22 @@ namespace Polyjam2020
 			}
 			if (destroyedCities >= destroyedCitiesLimit)
 			{
-				isDefeat = true;
-				//defeatScreen.gameObject.SetActive(true);
+				IsDefeat = true;
 				StartCoroutine(GameEndCoroutine());
+				return;
 			}
+			if (nodeDamageCooldown > 0.0f)
+			{
+				nodeDamageCooldown -= Time.deltaTime;
+			}
+			else
+			{
+				nodeDamageCooldown = timeBetweenNodeDamage;
+				var aliveNodes = graph.Nodes.Where(t => t.CurrentHealth > 0.0f).ToList<Node>();
+				int nodeToDamageIndex = Random.Range(0, aliveNodes.Count);
+				aliveNodes[nodeToDamageIndex].ApplyDamage(Node.MAX_HEALTH / 2.0f);
+			}
+			score += Time.deltaTime;
 		}
 
 		private IEnumerator GameEndCoroutine()
