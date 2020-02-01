@@ -28,7 +28,11 @@ namespace Polyjam2020
 			else
 			{
 				fireStartCooldown = fireStartInterval;
-				var aliveNodes = graph.Nodes.Where(t => t.GetComponent<FireStatus>() == null).ToList<Node>();
+				var aliveNodes = graph.Nodes.Where(t => t.GetComponent<HealthComponent>().CurrentValue > 0 &&  t.GetComponent<FireStatus>() == null).ToList();
+				if (aliveNodes.Count == 0)
+				{
+					return;
+				}
 				int nodeToDamageIndex = Random.Range(0, aliveNodes.Count);
 				aliveNodes[nodeToDamageIndex].AddStatus<FireStatus>();
 			}

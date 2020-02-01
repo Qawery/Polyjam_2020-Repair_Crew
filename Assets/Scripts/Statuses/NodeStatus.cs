@@ -23,6 +23,7 @@ namespace Polyjam2020
 			if (timer > statusApplicationInterval)
 			{
 				timer = 0;
+				ApplyStatusToNode(node);
 			}
 		}
 
