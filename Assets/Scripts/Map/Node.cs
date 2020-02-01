@@ -10,8 +10,9 @@ namespace Polyjam2020
 		public const float MAX_HEALTH = 5.0f;
 		private float currentHealth = MAX_HEALTH;
 		private List<Edge> edges = new List<Edge>();
+		public System.Action OnHealthChanged;
 		
-		
+
 		public List<UnitSlot> UnitSlots { get; } = new List<UnitSlot>();
 		public float CurrentHealth => currentHealth;
 		public List<Edge> Edges => edges;
@@ -53,6 +54,7 @@ namespace Polyjam2020
 			Assert.IsTrue(value > 0.0f, "Trying to apply damage not greater than zero on: " + gameObject.name);
 			currentHealth -= value;
 			currentHealth = Mathf.Max(currentHealth, 0.0f);
+			OnHealthChanged?.Invoke();
 		}
 
 		public void ApplyHeal(float value)
@@ -62,6 +64,7 @@ namespace Polyjam2020
 			{
 				currentHealth += value;
 				currentHealth = Mathf.Min(currentHealth, MAX_HEALTH);
+				OnHealthChanged?.Invoke();
 			}
 		}
 	}

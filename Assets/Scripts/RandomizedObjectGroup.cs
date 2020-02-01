@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
 
 namespace Polyjam2020
 {
@@ -10,6 +9,8 @@ namespace Polyjam2020
         [SerializeField] private float maxScaleFactor = 1.1f;
         [SerializeField] private float minRotation = 0.0f;
         [SerializeField] private float maxRotation = 360.0f;
+
+
         private void Awake()
         {
             for (int childIndex = 0; childIndex < transform.childCount; ++childIndex)
