@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 6085374683825280388}
   - component: {fileID: 6085374683825280415}
   - component: {fileID: 451428374368411052}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TestUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d600121e1e84284d8c0ba74f779319a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitClass: {fileID: 11400000, guid: 0abe7429c260ef34aa62c0b37e460cd6, type: 2}
 --- !u!114 &6085374683825280386
 MonoBehaviour:
   m_ObjectHideFlags: 0

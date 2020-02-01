@@ -7,11 +7,10 @@ namespace Polyjam2020
 	public class Unit : MonoBehaviour
 	{
 		public const float HEALING_AMOUNT = 1.0f;
+		[SerializeField] private UnitClass unitClass;
 		private Node nodeUnderEffect = null;
-
-
 		public Node NodeUnderEffect => nodeUnderEffect;
-
+		public UnitClass UnitClass => unitClass;
 
 		private void Awake()
 		{

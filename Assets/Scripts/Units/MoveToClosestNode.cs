@@ -26,7 +26,7 @@ namespace Polyjam2020
 			{
 				var movement = GetComponent<UnitMovementController>();
 				Assert.IsNotNull(movement, $"UnitMovementController missing on {name}. Required by {nameof(MoveToClosestNode)}");
-				movement.MoveToPoint(closestNode.transform.position);
+				movement.MoveToPoint(closestNode.UnitSlots.Find(slot => !slot.IsOccupied).transform.position);
 			}
 		}
 		

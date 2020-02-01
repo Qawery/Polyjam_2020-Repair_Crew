@@ -73,27 +73,27 @@ namespace Polyjam2020.Tests
             var derivedListenerPrefab = new GameObject();
             derivedListenerPrefab.AddComponent<DerivedListener>();
 
-            var base1 = World.Instance.Instantiate(basePrefab);
-            var derived1 = World.Instance.Instantiate(derivedPrefab);
+            var base1 = World.Instance.InstantiateObject(basePrefab);
+            var derived1 = World.Instance.InstantiateObject(derivedPrefab);
             
             Assert.IsTrue(baseListener.InstancesCounted == 2);
             
-            var derivedListener = World.Instance.Instantiate(derivedListenerPrefab).GetComponent<DerivedListener>();
+            var derivedListener = World.Instance.InstantiateObject(derivedListenerPrefab).GetComponent<DerivedListener>();
             Assert.IsTrue(derivedListener.InstancesCounted == 0);
             Assert.IsTrue(derivedListener.InstancesCountedInDerivedListener == 0);
             Assert.IsTrue(derivedListener.DerivedTypesCounted == 0);
             
-            var base2 = World.Instance.Instantiate(basePrefab);
-            var derived2 = World.Instance.Instantiate(derivedPrefab);
+            var base2 = World.Instance.InstantiateObject(basePrefab);
+            var derived2 = World.Instance.InstantiateObject(derivedPrefab);
             Assert.IsTrue(baseListener.InstancesCounted == 4);
             Assert.IsTrue(derivedListener.InstancesCounted == 2);
             Assert.IsTrue(derivedListener.InstancesCountedInDerivedListener == 2);
             Assert.IsTrue(derivedListener.DerivedTypesCounted == 1);
             
-            World.Instance.Destroy(base1);
-            World.Instance.Destroy(base2);
-            World.Instance.Destroy(derived1);
-            World.Instance.Destroy(derived2);
+            World.Instance.DestroyObject(base1);
+            World.Instance.DestroyObject(base2);
+            World.Instance.DestroyObject(derived1);
+            World.Instance.DestroyObject(derived2);
             
             Assert.IsTrue(baseListener.InstancesCounted == 0);
             Assert.IsTrue(derivedListener.InstancesCounted == -2);
