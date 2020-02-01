@@ -88,7 +88,6 @@ namespace Polyjam2020.Tests
             helper.Scrapyard.ScrapUnit(unit);
             yield return null;
             Assert.IsNull(unit);
-            Assert.IsTrue(resourceManager.ResourcesRemaining == resourceManager.MaxResources);
         }
     }
 }
