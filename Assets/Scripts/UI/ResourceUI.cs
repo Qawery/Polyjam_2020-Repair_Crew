@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.Assertions;
+
 
 namespace Polyjam2020
 {
 	public class ResourceUI : MonoBehaviour
 	{
-		[SerializeField] private Text resourceText;
+		[SerializeField] private TMPro.TextMeshProUGUI resourceText = null;
+
 
 		private void Awake()
 		{
+			Assert.IsNotNull(resourceText);
 			FindObjectOfType<ResourceManager>().OnResourceAmountChanged += OnResourceAmountChanged;
 		}
 
 		private void OnResourceAmountChanged((int previous, int current) resourceChangeData)
 		{
-			resourceText.text = $"Resources: {resourceChangeData.current}";
+			resourceText.text = $"Available Resources: {resourceChangeData.current}";
 		}
 	}
 }

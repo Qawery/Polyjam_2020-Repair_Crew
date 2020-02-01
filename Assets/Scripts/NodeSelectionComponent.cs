@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 
+
 namespace Polyjam2020
 {
 	public class NodeSelectionComponent : MonoBehaviour
 	{
-		public bool IsSelected { get; private set; }
+		private Node node;
 		public event System.Action<Node> OnSelected;
 		public event System.Action<Node> OnDeselected;
 
-		private Node node;
+
+		public bool IsSelected { get; private set; }
+
 
 		private void Awake()
 		{

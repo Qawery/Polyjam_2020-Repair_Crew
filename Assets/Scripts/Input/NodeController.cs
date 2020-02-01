@@ -14,10 +14,10 @@ namespace Polyjam2020
 		public event System.Action<Node> OnSelectedNodeChanged;
 
 
-		private Node SelectedNode
+		public Node SelectedNode
 		{
 			get => selectedNode;
-			set
+			private set
 			{
 				if (selectedNode != null && selectedNode != value)
 				{

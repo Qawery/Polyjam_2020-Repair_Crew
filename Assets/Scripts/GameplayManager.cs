@@ -2,7 +2,6 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.Assertions;
 using System.Collections;
-using System.Linq;
 
 
 namespace Polyjam2020
@@ -66,8 +65,7 @@ namespace Polyjam2020
 				IsDefeat = true;
 				StartCoroutine(GameEndCoroutine());
 				return;
-			}
-			
+			}			
 			score += Time.deltaTime;
 		}
 

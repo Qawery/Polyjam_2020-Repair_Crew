@@ -1,15 +1,19 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.Assertions;
+
 
 namespace Polyjam2020
 {
 	public class SelectedUnitPanel : MonoBehaviour
 	{
-		[SerializeField] private Text nameText;
+		[SerializeField] private TMPro.TextMeshProUGUI nameText = null;
+
+
 		private void Awake()
 		{
+			Assert.IsNotNull(nameText);
 			var unitController = FindObjectOfType<UnitController>();
+			Assert.IsNotNull(unitController);
 			unitController.OnSelectedUnitChanged += OnSelectedUnitChanged;
 			gameObject.SetActive(false);
 		}
@@ -18,7 +22,7 @@ namespace Polyjam2020
 		{
 			if (unit != null)
 			{
-				nameText.text = unit.name + "; Class: " + unit.UnitClass.DisplayName;
+				nameText.text = unit.UnitClass.DisplayName;
 				gameObject.SetActive(true);
 			}
 			else

@@ -7,9 +7,6 @@ namespace Polyjam2020
 {
 	public class Node : MonoBehaviour
 	{
-		[SerializeField] private GameObject livingElements = null;
-		[SerializeField] private GameObject fires = null;
-		[SerializeField] private GameObject rubble = null;
 		private List<Edge> edges = new List<Edge>();
 		public List<UnitSlot> UnitSlots { get; } = new List<UnitSlot>();
 		public List<Edge> Edges => edges;
@@ -20,13 +17,7 @@ namespace Polyjam2020
 
 		private void Awake()
 		{
-			Assert.IsNotNull(livingElements);
-			Assert.IsNotNull(fires);
-			Assert.IsNotNull(rubble);
 			UnitSlots.AddRange(GetComponentsInChildren<UnitSlot>());
-			livingElements.SetActive(true);
-			fires.SetActive(false);
-			rubble.SetActive(false);
 		}
 
 		private void OnDestroy()

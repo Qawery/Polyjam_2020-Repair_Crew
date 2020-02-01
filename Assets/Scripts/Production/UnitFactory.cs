@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
+
 namespace Polyjam2020
 {
 	[System.Serializable]
@@ -9,8 +10,8 @@ namespace Polyjam2020
 	{
 		public Unit Unit;
 		public int ProductionCost;
-		public int ProductionTime; //ignored for now
 	}
+
 
 	public enum ProductionPossibilityStatus
 	{
@@ -19,19 +20,21 @@ namespace Polyjam2020
 		NO_SPAWN_SLOT_AVAILABLE
 	}
 	
+
 	public class UnitFactory : MonoBehaviour
 	{
 		[SerializeField] private List<UnitProductionData> unitProductionData;
 		private ResourceManager resourceManager;
 		private Node node;
 		
+
 		public List<UnitProductionData> UnitProductionData => unitProductionData;
+
 
 		void Awake()
 		{
 			resourceManager = FindObjectOfType<ResourceManager>();
-			Assert.IsNotNull(resourceManager, $"There is no ResourceManager on scene, but UnitFactory {name} relies on it");
-			
+			Assert.IsNotNull(resourceManager, $"There is no ResourceManager on scene, but UnitFactory {name} relies on it");			
 			node = GetComponent<Node>();
 			Assert.IsNotNull(node, $"Node component missing on {name}");
 		}
@@ -44,12 +47,10 @@ namespace Polyjam2020
 			{
 				return ProductionPossibilityStatus.MISSING_RESOURCES;
 			}
-
 			if (!node.UnitSlots.Exists(slot => !slot.IsOccupied))
 			{
 				return ProductionPossibilityStatus.NO_SPAWN_SLOT_AVAILABLE;
 			}
-
 			return ProductionPossibilityStatus.OK;
 		}
 

@@ -6,16 +6,20 @@ namespace Polyjam2020
 {
 	public class Unit : MonoBehaviour
 	{
-		[SerializeField] private UnitClass unitClass;
+		[SerializeField] private UnitClass unitClass = null;
 		private Node nodeUnderEffect = null;
-		public Node NodeUnderEffect => nodeUnderEffect;
-		public UnitClass UnitClass => unitClass;
-
 		public event System.Action<Node> OnEnteredNode;
 		public event System.Action<Node> OnLeftNode;
 
+
+		public Node NodeUnderEffect => nodeUnderEffect;
+		public UnitClass UnitClass => unitClass;
+
+
+
 		private void Awake()
 		{
+			Assert.IsNotNull(UnitClass);
 			var trigger = GetComponent<Collider>();
 			Assert.IsNotNull(trigger, "Missing collider component on: " + gameObject.name);
 			Assert.IsTrue(trigger.isTrigger, "Collider is not trigger on: " + gameObject.name);

@@ -861,6 +861,7 @@ GameObject:
   - component: {fileID: 2409168374263842344}
   - component: {fileID: -3046359883343153574}
   - component: {fileID: 262960556469366207}
+  - component: {fileID: 1707972604075792385}
   m_Layer: 8
   m_Name: Node
   m_TagString: Untagged
@@ -911,9 +912,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 092cb9e022858a24181ec97db833e540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  livingElements: {fileID: 3231869462888066448}
-  fires: {fileID: 2820006131048421755}
-  rubble: {fileID: 7719734444029910073}
 --- !u!114 &-3046359883343153574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -939,6 +937,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxValue: 100
+--- !u!114 &1707972604075792385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5225039143135312509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 580f3e67a4000eb459fbcb60b0d7070a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  livingElements: {fileID: 3231869462888066448}
+  fires: {fileID: 2820006131048421755}
+  rubble: {fileID: 7719734444029910073}
 --- !u!1 &5752791393934514524
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,7 +963,7 @@ GameObject:
   - component: {fileID: 8936995252723982671}
   - component: {fileID: 8859848100134832156}
   m_Layer: 8
-  m_Name: Slider
+  m_Name: HealthBarSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1330,7 +1343,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2576432527555871646}
   - component: {fileID: 7461156544900117322}
-  - component: {fileID: 2293514013186192082}
+  - component: {fileID: 4650628522700652000}
   m_Layer: 0
   m_Name: NodeOverGUI
   m_TagString: Untagged
@@ -1365,7 +1378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34af5298e0e2daa4da2d778fc07e53a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2293514013186192082
+--- !u!114 &4650628522700652000
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

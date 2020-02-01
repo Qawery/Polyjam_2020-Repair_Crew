@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 
+
 namespace Polyjam2020
 {
 	public class UnitSlot : MonoBehaviour
 	{
 		[SerializeField] private float unitRotationSpeed = 360.0f;
+
+
 		public Unit UnitInSlot { get; private set; }
 		public bool IsOccupied => UnitInSlot != null;
+
+
 		private void OnTriggerEnter(Collider other)
 		{
 			if (UnitInSlot == null)
