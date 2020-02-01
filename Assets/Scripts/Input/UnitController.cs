@@ -1,19 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 
 namespace Polyjam2020
 {
-	public class PlayerController : MonoBehaviour
+	public class UnitController : MonoBehaviour
 	{
 		[SerializeField] private LayerMask movementTargetLayers;
 
 		private List<Unit> selectableUnits = new List<Unit>();
 		private Unit selectedUnit = null;
-		private bool isFirstClickProcessed = false;
 
+		private Unit SelectedUnit
+		{
+			get => selectedUnit;
+			set
+			{
+				selectedUnit = value;
+				OnSelectedUnitChanged?.Invoke(selectedUnit);
+			}
+		}
+
+		public event System.Action<Unit> OnSelectedUnitChanged;
+		
 		[SpawnHandlerMethod]
 		private void OnSelectableUnitSpawned(UnitSelectionComponent selectionComponent)
 		{
@@ -41,39 +50,42 @@ namespace Polyjam2020
 				}
 			}
 
-			selectedUnit = unit;
-			isFirstClickProcessed = false;
+			SelectedUnit = unit;
 		}
 
 		private void OnUnitDeselected(Unit unit)
 		{
-			if (unit == selectedUnit)
+			if (unit == SelectedUnit)
 			{
-				selectedUnit = null;
+				SelectedUnit = null;
 			}
 		}
 
 		private void Update()
 		{
-			if (selectedUnit == null)
+			if (SelectedUnit != null)
 			{
-				return;
+				ProcessUnitOrders();
 			}
-
-			ProcessMovementOrders();
 		}
 
-		private void ProcessMovementOrders()
+		private void ProcessUnitOrders()
 		{
+			if (Input.GetKeyDown(KeyCode.Mouse1))
+			{
+				SelectedUnit.GetComponent<UnitSelectionComponent>().Deselect();
+				return;
+			}
+			
 			if (Input.GetKeyUp(KeyCode.Mouse0))
 			{
-				var movement = selectedUnit.GetComponent<UnitMovementController>();
-				Assert.IsNotNull(movement, $"Missing movement controller on {selectedUnit.name}");
+				var movement = SelectedUnit.GetComponent<UnitMovementController>();
+				Assert.IsNotNull(movement, $"Missing movement controller on {SelectedUnit.name}");
 
 				var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 				if (Physics.Raycast(ray, out var hit, 100, movementTargetLayers))
 				{
-					var sourceNode = selectedUnit.NodeUnderEffect;
+					var sourceNode = SelectedUnit.NodeUnderEffect;
 					if (sourceNode != null)
 					{
 						var targetNode = hit.collider.GetComponent<Node>();
@@ -89,7 +101,7 @@ namespace Polyjam2020
 							var slot = targetNode.UnitSlots.Find(candidate => !candidate.IsOccupied);
 							if (slot != null)
 							{
-								movement.MoveToPoint(hit.collider.transform.position);
+								movement.MoveToPoint(slot.transform.position);
 							}
 							else
 							{
