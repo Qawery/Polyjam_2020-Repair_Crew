@@ -7,20 +7,47 @@ namespace Polyjam2020
 {
 	public class Node : MonoBehaviour
 	{
+		[SerializeField] private GameObject livingElements = null;
+		[SerializeField] private GameObject fires = null;
+		[SerializeField] private GameObject rubble = null;
 		public const float MAX_HEALTH = 5.0f;
 		private float currentHealth = MAX_HEALTH;
 		private List<Edge> edges = new List<Edge>();
 		public System.Action OnHealthChanged;
-		
+
 
 		public List<UnitSlot> UnitSlots { get; } = new List<UnitSlot>();
-		public float CurrentHealth => currentHealth;
 		public List<Edge> Edges => edges;
+
+		public float CurrentHealth
+		{
+			get
+			{
+				return currentHealth;
+			}
+
+			private set
+			{
+				currentHealth = value;
+				if (currentHealth <= 0.0f)
+				{
+					livingElements.SetActive(false);
+					rubble.SetActive(true);
+				}
+				OnHealthChanged?.Invoke();
+			}
+		}
 
 
 		private void Awake()
 		{
+			Assert.IsNotNull(livingElements);
+			Assert.IsNotNull(fires);
+			Assert.IsNotNull(rubble);
 			UnitSlots.AddRange(GetComponentsInChildren<UnitSlot>());
+			livingElements.SetActive(true);
+			fires.SetActive(false);
+			rubble.SetActive(false);
 		}
 
 		private void OnDestroy()
@@ -52,20 +79,21 @@ namespace Polyjam2020
 		public void ApplyDamage(float value)
 		{
 			Assert.IsTrue(value > 0.0f, "Trying to apply damage not greater than zero on: " + gameObject.name);
-			currentHealth -= value;
-			currentHealth = Mathf.Max(currentHealth, 0.0f);
-			OnHealthChanged?.Invoke();
+			CurrentHealth = Mathf.Max(CurrentHealth - value, 0.0f);
 		}
 
 		public void ApplyHeal(float value)
 		{
 			Assert.IsTrue(value > 0.0f, "Trying to apply heal not greater than zero on: " + gameObject.name);
-			if (currentHealth > 0.0f)
+			if (CurrentHealth > 0.0f)
 			{
-				currentHealth += value;
-				currentHealth = Mathf.Min(currentHealth, MAX_HEALTH);
-				OnHealthChanged?.Invoke();
+				CurrentHealth = Mathf.Min(CurrentHealth + value, MAX_HEALTH);
 			}
+		}
+
+		private void OnStatusChanged()
+		{
+			//TODO: Podpięcie i reagowanie na zmiany statusu, włączanie i wyłączanie ognia
 		}
 	}
 }

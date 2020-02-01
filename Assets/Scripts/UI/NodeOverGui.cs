@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace Polyjam2020
 {
-	public class NodeOverGui : MonoBehaviour
+	public class NodeOverGUI : MonoBehaviour
 	{
 		[SerializeField] private Node node = null;
 		[SerializeField] private Slider healthBar = null;
