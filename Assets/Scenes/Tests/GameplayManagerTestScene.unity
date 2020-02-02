@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 3
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -267,7 +267,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Node (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1707972604075792385, guid: b5cc00891352d8f468f79380306b62d2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b5cc00891352d8f468f79380306b62d2, type: 3}
 --- !u!114 &537714458 stripped
 MonoBehaviour:
@@ -348,7 +349,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Node (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1707972604075792385, guid: b5cc00891352d8f468f79380306b62d2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b5cc00891352d8f468f79380306b62d2, type: 3}
 --- !u!114 &1230099588 stripped
 MonoBehaviour:
@@ -429,7 +431,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Node (3)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1707972604075792385, guid: b5cc00891352d8f468f79380306b62d2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b5cc00891352d8f468f79380306b62d2, type: 3}
 --- !u!114 &1694051091 stripped
 MonoBehaviour:
@@ -609,4 +612,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2216eb539ea87bf4ea685b5f9ceb602a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defeatScreen: {fileID: 0}
