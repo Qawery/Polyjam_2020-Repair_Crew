@@ -2,16 +2,18 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
+
 namespace Polyjam2020
 {
 	public class UnitController : MonoBehaviour
 	{
 		[SerializeField] private LayerMask movementTargetLayers;
 		[SerializeField] private LayerMask unitClickLayer;
-
 		private List<Unit> selectableUnits = new List<Unit>();
 		private Unit selectedUnit = null;
-		
+		public event System.Action<Unit> OnSelectedUnitChanged;
+
+
 		public Unit SelectedUnit
 		{
 			get => selectedUnit;
@@ -20,20 +22,16 @@ namespace Polyjam2020
 				if (selectedUnit != null && selectedUnit != value)
 				{
 					selectedUnit.GetComponent<UnitSelectionComponent>().Deselect();
-				}
-				
-				selectedUnit = value;
-				
-				if (selectedUnit != value)
+				}				
+				selectedUnit = value;				
+				if (selectedUnit != null)
 				{
 					selectedUnit.GetComponent<UnitSelectionComponent>().Select();
-				}
-				
+				}				
 				OnSelectedUnitChanged?.Invoke(selectedUnit);
 			}
 		}
 
-		public event System.Action<Unit> OnSelectedUnitChanged;
 		
 		[SpawnHandlerMethod]
 		private void OnSelectableUnitSpawned(UnitSelectionComponent selectionComponent)
@@ -61,7 +59,6 @@ namespace Polyjam2020
 					selectableUnit.GetComponent<UnitSelectionComponent>().Deselect();
 				}
 			}
-
 			selectedUnit = unit;
 		}
 
@@ -97,7 +94,6 @@ namespace Polyjam2020
 					{
 						SelectedUnit = unit;
 					}
-
 					return;
 				}
 			}

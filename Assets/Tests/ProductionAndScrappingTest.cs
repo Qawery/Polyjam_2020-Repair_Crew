@@ -1,15 +1,16 @@
 ﻿using System.Collections;
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using Assert = UnityEngine.Assertions.Assert;
+
 
 namespace Polyjam2020.Tests
 {
     public class ProductionAndScrappingTest
     {
         const string SCENE_NAME = "ProductionAndScrappingTest";
+
 
         [UnityTest]
         public IEnumerator ProductionTest()
