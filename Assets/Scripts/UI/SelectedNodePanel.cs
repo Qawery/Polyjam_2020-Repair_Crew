@@ -56,6 +56,7 @@ namespace Polyjam2020
 					{
 						var button = existingButtons[buttonIndex];
 						button.gameObject.SetActive(true);
+						button.interactable = true;
 						button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"Produce {productionData.Unit.UnitClass.DisplayName}";
 						int indexCopy = productIndex;
 						button.onClick.AddListener(() =>
@@ -77,6 +78,12 @@ namespace Polyjam2020
 				var scrapyard = node.GetComponent<Scrapyard>();
 				if (scrapyard != null) 
 				{
+					while (existingButtons.Count < node.UnitSlots.Count)
+					{
+						var newButton = Instantiate(buttonPrefab, buttonParent.transform).GetComponent<Button>();
+						existingButtons.Add(newButton);
+						newButton.gameObject.SetActive(false);
+					}
 					name += ", Scrapyard";
 					foreach (var unitSlot in node.UnitSlots)
 					{
@@ -85,6 +92,7 @@ namespace Polyjam2020
 							var unit = unitSlot.UnitInSlot;
 							var button = existingButtons[buttonIndex];
 							button.gameObject.SetActive(true);
+							button.interactable = true;
 							button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"Scrap {unit.UnitClass.DisplayName}";
 							button.onClick.AddListener(() => { scrapyard.ScrapUnit(unit); button.gameObject.SetActive(false);});
 							++buttonIndex;
