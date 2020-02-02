@@ -133,6 +133,7 @@ namespace Polyjam2020
 								if (slot != null)
 								{
 									movement.MoveToPoint(slot.transform.position);
+									slot.IsReserved = true;
 								}
 								else
 								{
@@ -141,8 +142,7 @@ namespace Polyjam2020
 							}
 							else
 							{
-								Debug.Log(
-									$"No direct edge from {sourceNode.name} to {targetNode.name}. Can't perform movement action");
+								Debug.Log($"No direct edge from {sourceNode.name} to {targetNode.name}. Can't perform movement action");
 							}
 						}
 					}

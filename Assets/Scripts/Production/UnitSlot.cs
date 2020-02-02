@@ -9,7 +9,8 @@ namespace Polyjam2020
 
 
 		public Unit UnitInSlot { get; private set; }
-		public bool IsOccupied => UnitInSlot != null;
+		public bool IsReserved { get; set; }
+		public bool IsOccupied => UnitInSlot != null || IsReserved;
 
 
 		private void OnTriggerEnter(Collider other)
@@ -17,6 +18,7 @@ namespace Polyjam2020
 			if (UnitInSlot == null)
 			{
 				UnitInSlot = other.GetComponent<Unit>();
+				IsReserved = false;
 			}
 		}
 
