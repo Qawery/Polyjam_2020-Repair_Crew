@@ -1304,7 +1304,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Node (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1707972604075792385, guid: b5cc00891352d8f468f79380306b62d2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b5cc00891352d8f468f79380306b62d2, type: 3}
 --- !u!4 &1717766967 stripped
 Transform:
@@ -1482,7 +1483,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: FactoryToFillOut
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5236423607490230257, guid: 9590833ec6570fe47a6df0fd5e6dcc05, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9590833ec6570fe47a6df0fd5e6dcc05, type: 3}
 --- !u!4 &2106611095 stripped
 Transform:
@@ -1661,7 +1663,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Node (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1707972604075792385, guid: b5cc00891352d8f468f79380306b62d2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b5cc00891352d8f468f79380306b62d2, type: 3}
 --- !u!4 &2123209028 stripped
 Transform:
@@ -1894,7 +1897,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: FactoryNode
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5236423607490230257, guid: 9590833ec6570fe47a6df0fd5e6dcc05, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9590833ec6570fe47a6df0fd5e6dcc05, type: 3}
 --- !u!114 &6852353888112611371 stripped
 MonoBehaviour:
@@ -1980,7 +1984,8 @@ PrefabInstance:
       propertyPath: unitScrapData.Array.data[0].GainFromScrapping
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7579268215014579470, guid: 8c859b2c8ad84134db63383f6cc600da, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8c859b2c8ad84134db63383f6cc600da, type: 3}
 --- !u!114 &9123457491107802010 stripped
 MonoBehaviour:
