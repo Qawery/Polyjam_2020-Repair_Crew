@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
+
 
 namespace Polyjam2020
 {
@@ -11,9 +9,11 @@ namespace Polyjam2020
 		[SerializeField] private int resourceRegenerationRate = 0;
 		[SerializeField] private float resourceRegenerationInterval = 0;
 		[SerializeField] private int maxResources = 10;
-
+		private int resourcesRemaining;
 		private float resourceRegenerationTimer = 0;
-		
+		public event System.Action<(int previous, int current)> OnResourceAmountChanged;
+
+
 		public int ResourceRegenerationRate
 		{
 			get => resourceRegenerationRate;
@@ -32,7 +32,6 @@ namespace Polyjam2020
 			set => maxResources = value;
 		}
 
-		private int resourcesRemaining;
 		public int ResourcesRemaining
 		{
 			get => resourcesRemaining;
@@ -45,7 +44,6 @@ namespace Polyjam2020
 			}
 		}
 
-		public event System.Action<(int previous, int current)> OnResourceAmountChanged;
 
 		public void SpendResources(int amount)
 		{
