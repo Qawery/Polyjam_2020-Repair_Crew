@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 18e9d76d0b0a0fb459c9523e5c90794a
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: MADE Mirage
+  fontNames:
+  - MADE Mirage
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: c7ec6435025a6dc48bfc000a06b58b23, type: 3}
+  - {fileID: 12800000, guid: e75e3e851dda4bc4cbd887e7a4a226dc, type: 3}
+  - {fileID: 12800000, guid: d75099ff953bf8d44a8a66299457de60, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

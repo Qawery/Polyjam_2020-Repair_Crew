@@ -828,7 +828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5c6f7cd10006694d9303baa1dd19443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStartInterval: 5
+  fireStartInterval: 1000
 --- !u!1001 &257377459
 PrefabInstance:
   m_ObjectHideFlags: 0

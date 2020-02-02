@@ -17,7 +17,7 @@ namespace Polyjam2020
 
 		private void OnResourceAmountChanged((int previous, int current) resourceChangeData)
 		{
-			resourceText.text = $"Available Resources: {resourceChangeData.current}";
+			resourceText.text = $"Resources: {resourceChangeData.current}";
 		}
 	}
 }
