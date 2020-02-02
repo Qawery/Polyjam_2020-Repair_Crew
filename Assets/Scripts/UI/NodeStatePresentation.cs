@@ -9,6 +9,9 @@ namespace Polyjam2020
 		[SerializeField] private GameObject livingElements = null;
 		[SerializeField] private GameObject fires = null;
 		[SerializeField] private GameObject rubble = null;
+		[SerializeField] private AudioClip ignitionSound = null;
+		[SerializeField] private AudioClip rubbleSound = null;
+		private AudioSource audioSource = null;
 		private SelectionCircle selectionCircle = null;
 		private Node node = null;
 		private HealthComponent healthComponent = null;
@@ -16,6 +19,10 @@ namespace Polyjam2020
 
 		private void Awake()
 		{
+			Assert.IsNotNull(ignitionSound);
+			Assert.IsNotNull(rubbleSound);
+			audioSource = GetComponent<AudioSource>();
+			Assert.IsNotNull(audioSource);
 			selectionCircle = GetComponentInChildren<SelectionCircle>();
 			Assert.IsNotNull(livingElements);
 			Assert.IsNotNull(fires);
@@ -43,6 +50,7 @@ namespace Polyjam2020
 			{
 				livingElements.SetActive(false);
 				rubble.SetActive(true);
+				audioSource.PlayOneShot(rubbleSound);
 			}
 		}
 
@@ -51,6 +59,7 @@ namespace Polyjam2020
 			if (status is FireStatus)
 			{
 				fires.SetActive(true);
+				audioSource.PlayOneShot(ignitionSound);
 			}
 			//TODO: pozostałe wizualizacje statusów
 		}
