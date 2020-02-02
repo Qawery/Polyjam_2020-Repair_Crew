@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using System.Linq;
 
 
 namespace Polyjam2020
@@ -29,7 +30,7 @@ namespace Polyjam2020
 		
 
 		public List<UnitProductionData> UnitProductionData => unitProductionData;
-
+		public int FreeSlotCount => node.UnitSlots.Count(slot => !slot.IsOccupied);
 
 		void Awake()
 		{

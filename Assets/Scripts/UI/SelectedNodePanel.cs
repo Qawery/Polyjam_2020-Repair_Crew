@@ -58,7 +58,17 @@ namespace Polyjam2020
 						button.gameObject.SetActive(true);
 						button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"Produce {productionData.Unit.UnitClass.DisplayName}";
 						int indexCopy = productIndex;
-						button.onClick.AddListener(() => { factory.ProduceUnit(indexCopy);});
+						button.onClick.AddListener(() =>
+						{
+							factory.ProduceUnit(indexCopy);
+							for (var index = 0; index < factory.UnitProductionData.Count; index++)
+							{
+								if (factory.FreeSlotCount == 1 || factory.CheckProductionPossibility(index) != ProductionPossibilityStatus.OK)
+								{
+									existingButtons[index].interactable = false;
+								}
+							}
+						});
 						button.interactable = (factory.CheckProductionPossibility(productIndex) == ProductionPossibilityStatus.OK);
 						++productIndex;
 						++buttonIndex;
