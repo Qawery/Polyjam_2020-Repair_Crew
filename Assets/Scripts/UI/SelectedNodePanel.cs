@@ -12,6 +12,7 @@ namespace Polyjam2020
 		private List<Button> existingButtons = new List<Button>();
 		[SerializeField] private GameObject buttonParent = null;
 		[SerializeField] private Button buttonPrefab = null;
+		private HealthComponent selectedNodeHealth = null;
 
 
 		private void Awake()
@@ -40,54 +41,79 @@ namespace Polyjam2020
 			if (node != null)
 			{
 				string name = "City";
-				var factory = node.GetComponent<UnitFactory>();
-				int buttonIndex = 0;
-				if (factory != null)
+				if (selectedNodeHealth != null)
 				{
-					name += ", Factory";
-					int productIndex = 0;
-					while (existingButtons.Count < factory.UnitProductionData.Count)
-					{
-						var newButton = Instantiate(buttonPrefab, buttonParent.transform).GetComponent<Button>();
-						existingButtons.Add(newButton);
-						newButton.gameObject.SetActive(false);
-					}
-					foreach (var productionData in factory.UnitProductionData)
-					{
-						var button = existingButtons[buttonIndex];
-						button.gameObject.SetActive(true);
-						button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"Produce {productionData.Unit.UnitClass.DisplayName}";
-						int indexCopy = productIndex;
-						button.onClick.AddListener(() => { factory.ProduceUnit(indexCopy);});
-						button.interactable = (factory.CheckProductionPossibility(productIndex) == ProductionPossibilityStatus.OK);
-						++productIndex;
-						++buttonIndex;
-					}
+					selectedNodeHealth.OnValueChanged -= OnHealthChanged;
 				}
-				var scrapyard = node.GetComponent<Scrapyard>();
-				if (scrapyard != null) 
+				selectedNodeHealth = node.GetComponent<HealthComponent>();
+				selectedNodeHealth.OnValueChanged += OnHealthChanged;
+				if (selectedNodeHealth.CurrentValue > 0)
 				{
-					name += ", Scrapyard";
-					foreach (var unitSlot in node.UnitSlots)
+					var factory = node.GetComponent<UnitFactory>();
+					int buttonIndex = 0;
+					if (factory != null)
 					{
-						if (unitSlot.IsOccupied)
+						name = "Factory";
+						int productIndex = 0;
+						while (existingButtons.Count < factory.UnitProductionData.Count)
 						{
-							var unit = unitSlot.UnitInSlot;
+							var newButton = Instantiate(buttonPrefab, buttonParent.transform).GetComponent<Button>();
+							existingButtons.Add(newButton);
+							newButton.gameObject.SetActive(false);
+						}
+						foreach (var productionData in factory.UnitProductionData)
+						{
 							var button = existingButtons[buttonIndex];
 							button.gameObject.SetActive(true);
-							button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"Scrap {unit.UnitClass.DisplayName}";
-							button.onClick.AddListener(() => { scrapyard.ScrapUnit(unit); Destroy(button.gameObject);});
+							button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"Produce {productionData.Unit.UnitClass.DisplayName}";
+							int indexCopy = productIndex;
+							button.onClick.AddListener(() => { factory.ProduceUnit(indexCopy); });
+							button.interactable = (factory.CheckProductionPossibility(productIndex) == ProductionPossibilityStatus.OK);
+							++productIndex;
 							++buttonIndex;
 						}
 					}
+					var scrapyard = node.GetComponent<Scrapyard>();
+					if (scrapyard != null)
+					{
+						name = "Scrapyard";
+						foreach (var unitSlot in node.UnitSlots)
+						{
+							if (unitSlot.IsOccupied)
+							{
+								var unit = unitSlot.UnitInSlot;
+								var button = existingButtons[buttonIndex];
+								button.gameObject.SetActive(true);
+								button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"Scrap {unit.UnitClass.DisplayName}";
+								button.onClick.AddListener(() => { scrapyard.ScrapUnit(unit); Destroy(button.gameObject); });
+								++buttonIndex;
+							}
+						}
+					}
+				}
+				else
+				{
+					name = "Ruins";
 				}
 				nameText.text = name;
-				var health = node.GetComponent<HealthComponent>();
 				gameObject.SetActive(true);
 			}
 			else
 			{
 				gameObject.SetActive(false);
+			}
+		}
+
+		private void OnHealthChanged((int previous, int current) value)
+		{
+			if (value.current <= 0)
+			{
+				foreach (var button in existingButtons)
+				{
+					button.gameObject.SetActive(false);
+					button.onClick.RemoveAllListeners();
+				}
+				nameText.text = "Ruins";
 			}
 		}
 	}

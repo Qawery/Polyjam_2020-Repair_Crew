@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Assertions;
 
 
@@ -99,7 +100,7 @@ namespace Polyjam2020
 					return;
 				}
 			}
-			if (Input.GetKeyUp(KeyCode.Mouse0))
+			if (Input.GetKeyUp(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject())
 			{
 				var selectionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 				if (Physics.Raycast(selectionRay, out var hit, 100, nodeLayers))

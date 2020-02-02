@@ -6,12 +6,9 @@ namespace Polyjam2020
 {
 	public class NodeStatePresentation : MonoBehaviour
 	{
-		[SerializeField] private GameObject livingElements = null;
+		[SerializeField] private GameObject livingCityElements = null;
 		[SerializeField] private GameObject fires = null;
-		[SerializeField] private GameObject rubble = null;
-		[SerializeField] private AudioClip ignitionSound = null;
-		[SerializeField] private AudioClip rubbleSound = null;
-		private AudioSource audioSource = null;
+		[SerializeField] private GameObject ruins = null;
 		private SelectionCircle selectionCircle = null;
 		private Node node = null;
 		private HealthComponent healthComponent = null;
@@ -19,18 +16,14 @@ namespace Polyjam2020
 
 		private void Awake()
 		{
-			Assert.IsNotNull(ignitionSound);
-			Assert.IsNotNull(rubbleSound);
-			audioSource = GetComponent<AudioSource>();
-			Assert.IsNotNull(audioSource);
 			selectionCircle = GetComponentInChildren<SelectionCircle>();
-			Assert.IsNotNull(livingElements);
+			Assert.IsNotNull(livingCityElements);
 			Assert.IsNotNull(fires);
-			Assert.IsNotNull(rubble);
+			Assert.IsNotNull(ruins);
 			Assert.IsNotNull(selectionCircle);
-			livingElements.SetActive(true);
+			livingCityElements.SetActive(true);
 			fires.SetActive(false);
-			rubble.SetActive(false);
+			ruins.SetActive(false);
 			node = GetComponent<Node>();
 			Assert.IsNotNull(node);
 			node.OnStatusReceived += OnStatusReceived;
@@ -48,9 +41,8 @@ namespace Polyjam2020
 		{
 			if (values.current <= 0)
 			{
-				livingElements.SetActive(false);
-				rubble.SetActive(true);
-				audioSource.PlayOneShot(rubbleSound);
+				livingCityElements.SetActive(false);
+				ruins.SetActive(true);
 			}
 		}
 
@@ -59,7 +51,6 @@ namespace Polyjam2020
 			if (status is FireStatus)
 			{
 				fires.SetActive(true);
-				audioSource.PlayOneShot(ignitionSound);
 			}
 			//TODO: pozostałe wizualizacje statusów
 		}
