@@ -37,7 +37,7 @@ namespace Polyjam2020
             MoveToPoint(transform.position);
         }
 
-        private const float rotationTolerance = 0.01f;
+        private const float rotationTolerance = 1.0f;
         private const float speedTolerance = 0.01f;
         private const float distanceTolerance = 0.01f;
         private void Update()
