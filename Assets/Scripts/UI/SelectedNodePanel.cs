@@ -76,7 +76,7 @@ namespace Polyjam2020
 							var button = existingButtons[buttonIndex];
 							button.gameObject.SetActive(true);
 							button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"Scrap {unit.UnitClass.DisplayName}";
-							button.onClick.AddListener(() => { scrapyard.ScrapUnit(unit); Destroy(button.gameObject);});
+							button.onClick.AddListener(() => { scrapyard.ScrapUnit(unit); button.gameObject.SetActive(false);});
 							++buttonIndex;
 						}
 					}
